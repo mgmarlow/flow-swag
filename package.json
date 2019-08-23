@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "example": "yarn run build && node bin.js ./test/swagger/pet_store.yaml -c ./.prettierrc"
+    "example": "yarn run build && node bin.js ./test/swagger/pet_store.yaml -c -p ./.prettierrc"
   },
   "dependencies": {
     "commander": "^3.0.0",

@@ -11,7 +11,7 @@ function extractTypeFromSchema(schema) {
   return last(schema.split('/'))
 }
 
-function getType(property) {
+function getType(property, camelizeKeys) {
   const type = property.type
     ? property.type
     : extractTypeFromSchema(property['$ref'])
@@ -32,26 +32,29 @@ function getType(property) {
     case 'Object':
       // Nested object support
       return `{
-        ${generateProperties(property.properties)}
+        ${generateProperties(property.properties, camelizeKeys)}
       }`
 
     case 'array':
-      return `${getType(property.items)}[]`
+      return `${getType(property.items, camelizeKeys)}[]`
 
     default:
       return type
   }
 }
 
-function generateProperties(properties) {
+function generateProperties(properties, camelizeKeys) {
   return keys(properties)
     .map(key => {
-      return `${camelCase(key)}: ${getType(properties[key])},`
+      const propertyKey = camelizeKeys ? camelCase(key) : key
+      const propertyType = getType(properties[key], camelizeKeys)
+
+      return `${propertyKey}: ${propertyType},`
     })
     .join('\n')
 }
 
-function readSchema(definition, prettierConfig) {
+function readSchema(definition, { prettierConfig, camelizeKeys }) {
   if (!definition.components) {
     throw new Error(
       'No schema definitions found. Create definitions in components.schemas',
@@ -61,7 +64,7 @@ function readSchema(definition, prettierConfig) {
   const { schemas } = definition.components
 
   const types = keys(schemas).map(key => {
-    const properties = generateProperties(schemas[key].properties)
+    const properties = generateProperties(schemas[key].properties, camelizeKeys)
 
     return `export type ${key} = {
         ${properties}
@@ -91,7 +94,7 @@ function fetchSwaggerFromFile(filename) {
 //   return fetch(url)
 // }
 
-module.exports = function generateFlowTypes(source, prettierFile) {
+module.exports = function generateFlowTypes(source, opts) {
   const definition = fetchSwaggerFromFile(source)
-  return readSchema(definition, prettierFile)
+  return readSchema(definition, opts)
 }

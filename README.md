@@ -11,36 +11,16 @@ yarn global add flow-swag
 ## Usage
 
 ```
-flow-swag ./pet_store.yaml -c ./.prettierrc
+flow-swag ./pet_store.yaml -p ./.prettierrc
 ```
 
 Outputs:
 
 ```js
 // @flow
-export type Order = {
-  id: number,
-  petId: number,
-  quantity: number,
-  shipDate: string,
-  status: 'placed' | 'approved' | 'delivered',
-  complete: boolean,
-}
-
 export type Category = {
   id: number,
   name: string,
-}
-
-export type User = {
-  id: number,
-  username: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  phone: string,
-  userStatus: number,
 }
 
 export type Tag = {
@@ -57,11 +37,7 @@ export type Pet = {
   status: 'available' | 'pending' | 'sold',
 }
 
-export type ApiResponse = {
-  code: number,
-  type: string,
-  message: string,
-}
+// ...
 ```
 
 ## API
@@ -74,6 +50,7 @@ $ flow-swag -h
 Usage: flow-swag [options] <source>
 
 Options:
-  -c, --config <.prettierrc>  prettier configuration file
-  -h, --help                  output usage information
+  -p, --prettierConfig <.prettierrc>  prettier configuration file
+  -c, --camelizeKeys                  camelCase property names
+  -h, --help                          output usage information
 ```

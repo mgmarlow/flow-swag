@@ -910,7 +910,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "petId": {
+          "pet_id": {
             "type": "integer",
             "format": "int64"
           },
@@ -918,7 +918,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "shipDate": {
+          "ship_date": {
             "type": "string",
             "format": "date-time"
           },
@@ -965,10 +965,10 @@
           "username": {
             "type": "string"
           },
-          "firstName": {
+          "first_name": {
             "type": "string"
           },
-          "lastName": {
+          "last_name": {
             "type": "string"
           },
           "email": {
@@ -980,7 +980,7 @@
           "phone": {
             "type": "string"
           },
-          "userStatus": {
+          "user_status": {
             "type": "integer",
             "description": "User Status",
             "format": "int32"
@@ -1023,7 +1023,7 @@
             "type": "string",
             "example": "doggie"
           },
-          "photoUrls": {
+          "photo_urls": {
             "type": "array",
             "xml": {
               "name": "photoUrl",
