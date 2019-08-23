@@ -1,15 +1,22 @@
 {
-  "name": "flowgen",
+  "name": "flow-swag",
   "bin": {
-    "flowgen": "bin.js"
+    "flow-swag": "bin.js"
   },
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "jest",
+    "example": "yarn run build && node bin.js ./test/swagger/pet_store.yaml -c ./.prettierrc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "commander": "^3.0.0",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.15",
+    "prettier": "^1.18.2"
+  },
   "devDependencies": {
     "jest": "^24.9.0",
     "rollup": "^1.20.1",
