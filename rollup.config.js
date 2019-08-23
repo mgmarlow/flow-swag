@@ -1,5 +1,5 @@
-import { builtinModules } from 'module';
-import pkg from './package.json';
+import { builtinModules } from 'module'
+import pkg from './package.json'
 
 export default [
   /* index.js */
@@ -8,9 +8,9 @@ export default [
     output: {
       file: 'index.js',
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
     },
-    external: Object.keys(pkg.dependencies).concat(builtinModules)
+    external: Object.keys(pkg.dependencies).concat(builtinModules),
   },
 
   /* bin.js */
@@ -21,10 +21,12 @@ export default [
       format: 'cjs',
       banner: '#!/usr/bin/env node',
       paths: {
-        flowgen: './index.js'
+        'flow-swag': './index.js',
       },
-      sourcemap: true
+      sourcemap: true,
     },
-    external: Object.keys(pkg.dependencies).concat(builtinModules, ['flowgen'])
-  }
-];
+    external: Object.keys(pkg.dependencies).concat(builtinModules, [
+      'flow-swag',
+    ]),
+  },
+]

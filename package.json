@@ -1,15 +1,17 @@
 {
   "name": "flow-swag",
+  "description": "Flow Type generator for Swagger specifications",
   "bin": {
-    "flow-swag": "bin.js"
+    "fswag": "./bin.js"
   },
-  "version": "1.0.0",
+  "version": "1.0.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "example": "yarn run build && node bin.js ./test/swagger/pet_store.yaml -c -p ./.prettierrc"
+    "example": "yarn run build && node bin.js ./test/swagger/pet_store.yaml -c -p ./.prettierrc",
+    "prepublish": "yarn run build"
   },
   "dependencies": {
     "commander": "^3.0.0",

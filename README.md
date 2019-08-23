@@ -11,7 +11,7 @@ yarn global add flow-swag
 ## Usage
 
 ```
-flow-swag ./pet_store.yaml -p ./.prettierrc -o types.js
+fswag ./pet_store.yaml -p ./.prettierrc -o types.js
 ```
 
 Outputs:
