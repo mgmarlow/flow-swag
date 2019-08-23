@@ -1,0 +1,18 @@
+{
+  "name": "flowgen",
+  "bin": {
+    "flowgen": "bin.js"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "rollup": "^1.20.1",
+    "rollup-plugin-commonjs": "^10.0.2"
+  }
+}
