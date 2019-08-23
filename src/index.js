@@ -1,10 +1,11 @@
 const path = require('path')
 const fs = require('fs')
 const yaml = require('js-yaml')
+const prettier = require('prettier')
 const keys = require('lodash/keys')
 const merge = require('lodash/merge')
 const last = require('lodash/last')
-const prettier = require('prettier')
+const camelCase = require('lodash/camelCase')
 
 function extractTypeFromSchema(schema) {
   return last(schema.split('/'))
@@ -18,20 +19,24 @@ function getType(property) {
   switch (type) {
     case 'integer':
       return 'number'
+    case 'boolean':
+      return 'boolean'
 
-    // TODO: enum
     case 'string':
-      return 'string'
+      // Generate union types for enums
+      return property.enum
+        ? property.enum.map(t => `'${t}'`).join(' | ')
+        : 'string'
 
-    // TODO: Nested objects
     case 'object':
     case 'Object':
-      return 'Object'
+      // Nested object support
+      return `{
+        ${generateProperties(property.properties)}
+      }`
 
     case 'array':
       return `${getType(property.items)}[]`
-    case 'boolean':
-      return 'boolean'
 
     default:
       return type
@@ -41,7 +46,7 @@ function getType(property) {
 function generateProperties(properties) {
   return keys(properties)
     .map(key => {
-      return `${key}: ${getType(properties[key])},`
+      return `${camelCase(key)}: ${getType(properties[key])},`
     })
     .join('\n')
 }

@@ -594,13 +594,21 @@ components:
         id:
           type: integer
           format: int64
-        petId:
+        object_test:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            name:
+              type: string
+        pet_id:
           type: integer
           format: int64
         quantity:
           type: integer
           format: int32
-        shipDate:
+        ship_date:
           type: string
           format: date-time
         status:
@@ -633,9 +641,9 @@ components:
           format: int64
         username:
           type: string
-        firstName:
+        first_name:
           type: string
-        lastName:
+        last_name:
           type: string
         email:
           type: string
@@ -643,7 +651,7 @@ components:
           type: string
         phone:
           type: string
-        userStatus:
+        user_status:
           type: integer
           description: User Status
           format: int32
@@ -673,7 +681,7 @@ components:
         name:
           type: string
           example: doggie
-        photoUrls:
+        photo_urls:
           type: array
           xml:
             name: photoUrl
