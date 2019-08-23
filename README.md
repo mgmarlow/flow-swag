@@ -11,7 +11,7 @@ yarn global add flow-swag
 ## Usage
 
 ```
-flow-swag ./pet_store.yaml -p ./.prettierrc
+flow-swag ./pet_store.yaml -p ./.prettierrc -o types.js
 ```
 
 Outputs:
@@ -50,6 +50,7 @@ $ flow-swag -h
 Usage: flow-swag [options] <source>
 
 Options:
+  -o, --output <file>                 output file (default: "types.js")
   -p, --prettierConfig <.prettierrc>  prettier configuration file
   -c, --camelizeKeys                  camelCase property names
   -h, --help                          output usage information
