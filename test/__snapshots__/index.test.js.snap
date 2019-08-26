@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`#generateFlowTypes .json source camelizeKeys is false should generate swagger 1`] = `
+exports[`#generateFlowTypes .json source camelizeKeys is false should generate flow types 1`] = `
 "// @flow
 export type Order = {
   id: number,
@@ -49,7 +49,7 @@ export type ApiResponse = {
 "
 `;
 
-exports[`#generateFlowTypes .json source camelizeKeys is true should generate swagger 1`] = `
+exports[`#generateFlowTypes .json source camelizeKeys is true should generate flow types 1`] = `
 "// @flow
 export type Order = {
   id: number,
@@ -98,7 +98,7 @@ export type ApiResponse = {
 "
 `;
 
-exports[`#generateFlowTypes .yaml source camelizeKeys is false should generate swagger 1`] = `
+exports[`#generateFlowTypes .yaml source camelizeKeys is false should generate flow types 1`] = `
 "// @flow
 export type Order = {
   id: number,
@@ -151,7 +151,7 @@ export type ApiResponse = {
 "
 `;
 
-exports[`#generateFlowTypes .yaml source camelizeKeys is true should generate swagger 1`] = `
+exports[`#generateFlowTypes .yaml source camelizeKeys is true should generate flow types 1`] = `
 "// @flow
 export type Order = {
   id: number,
@@ -180,6 +180,108 @@ export type User = {
   password: string,
   phone: string,
   userStatus: number,
+}
+
+export type Tag = {
+  id: number,
+  name: string,
+}
+
+export type Pet = {
+  id: number,
+  category: Category,
+  name: string,
+  photoUrls: string[],
+  tags: Tag[],
+  status: 'available' | 'pending' | 'sold',
+}
+
+export type ApiResponse = {
+  code: number,
+  type: string,
+  message: string,
+}
+"
+`;
+
+exports[`#generateFlowTypes alternative .prettierc should generate flow types 1`] = `
+"// @flow
+export type Order = {
+  id: number,
+  object_test: {
+    id: number,
+    name: string
+  },
+  pet_id: number,
+  quantity: number,
+  ship_date: string,
+  status: \\"placed\\" | \\"approved\\" | \\"delivered\\",
+  complete: boolean
+};
+
+export type Category = {
+  id: number,
+  name: string
+};
+
+export type User = {
+  id: number,
+  username: string,
+  first_name: string,
+  last_name: string,
+  email: string,
+  password: string,
+  phone: string,
+  user_status: number
+};
+
+export type Tag = {
+  id: number,
+  name: string
+};
+
+export type Pet = {
+  id: number,
+  category: Category,
+  name: string,
+  photo_urls: string[],
+  tags: Tag[],
+  status: \\"available\\" | \\"pending\\" | \\"sold\\"
+};
+
+export type ApiResponse = {
+  code: number,
+  type: string,
+  message: string
+};
+"
+`;
+
+exports[`#generateFlowTypes swagger v2 should generate flow types 1`] = `
+"// @flow
+export type Order = {
+  id: number,
+  petId: number,
+  quantity: number,
+  shipDate: string,
+  status: 'placed' | 'approved' | 'delivered',
+  complete: boolean,
+}
+
+export type User = {
+  id: number,
+  username: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  phone: string,
+  userStatus: number,
+}
+
+export type Category = {
+  id: number,
+  name: string,
 }
 
 export type Tag = {

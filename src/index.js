@@ -7,18 +7,23 @@ const merge = require('lodash/merge')
 const last = require('lodash/last')
 const camelCase = require('lodash/camelCase')
 
-function extractTypeFromSchema(schema) {
+// Grabs the end of a ref and assumes it to be a defined type
+// e.g. '#/components/schemas/User' -> User
+function extractTypeFromRef(schema) {
   return last(schema.split('/'))
 }
 
+// Converts a given swagger type to Flow
 function getType(property, camelizeKeys) {
   const type = property.type
     ? property.type
-    : extractTypeFromSchema(property['$ref'])
+    : extractTypeFromRef(property['$ref'])
 
   switch (type) {
     case 'integer':
+    case 'float':
       return 'number'
+
     case 'boolean':
       return 'boolean'
 
@@ -30,12 +35,13 @@ function getType(property, camelizeKeys) {
 
     case 'object':
     case 'Object':
-      // Nested object support
+      // Nested object support, recursively generate sub-properties
       return `{
         ${generateProperties(property.properties, camelizeKeys)}
       }`
 
     case 'array':
+      // Recursively extract type from the array items
       return `${getType(property.items, camelizeKeys)}[]`
 
     default:
@@ -43,6 +49,7 @@ function getType(property, camelizeKeys) {
   }
 }
 
+// Generates Flow types for properties within a given schema
 function generateProperties(properties, camelizeKeys) {
   return keys(properties)
     .map(key => {
@@ -54,14 +61,17 @@ function generateProperties(properties, camelizeKeys) {
     .join('\n')
 }
 
-function readSchema(definition, { prettierConfig, camelizeKeys }) {
-  if (!definition.components) {
+function readSchema(base, { prettierConfig, camelizeKeys }) {
+  let schemas
+  if (base.components) {
+    schemas = base.components.schemas
+  } else if (base.definitions) {
+    schemas = base.definitions
+  } else {
     throw new Error(
       'No schema definitions found. Create definitions in components.schemas',
     )
   }
-
-  const { schemas } = definition.components
 
   const types = keys(schemas).map(key => {
     const properties = generateProperties(schemas[key].properties, camelizeKeys)
@@ -71,7 +81,10 @@ function readSchema(definition, { prettierConfig, camelizeKeys }) {
       }`
   })
 
-  const config = prettier.resolveConfig.sync(prettierConfig) || {}
+  const config =
+    prettier.resolveConfig.sync(prettierConfig, { config: prettierConfig }) ||
+    {}
+
   return prettier.format(
     `// @flow\n${types.join('\n\n')}`,
     merge(config, { parser: 'flow' }),
