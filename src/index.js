@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const fetch = require('node-fetch')
 const yaml = require('js-yaml')
 const prettier = require('prettier')
 const keys = require('lodash/keys')
@@ -103,12 +104,18 @@ function fetchSwaggerFromFile(filename) {
   return isYaml(ext) ? yaml.safeLoad(file) : JSON.parse(file)
 }
 
-// TODO:
-// function fetchSwaggerFromURL(url) {
-//   return fetch(url)
-// }
+async function fetchSwaggerFromURL(url) {
+  const response = await fetch(url)
+  return response.json()
+}
 
-module.exports = function generateFlowTypes(source, opts) {
-  const definition = fetchSwaggerFromFile(source)
+module.exports = async function generateFlowTypes(source, opts) {
+  let definition
+  if (source.includes('http')) {
+    definition = await fetchSwaggerFromURL(source)
+  } else {
+    definition = fetchSwaggerFromFile(source)
+  }
+
   return readSchema(definition, opts)
 }
