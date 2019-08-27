@@ -55,8 +55,9 @@ function generateProperties(properties, camelizeKeys) {
     .map(key => {
       const propertyKey = camelizeKeys ? camelCase(key) : key
       const propertyType = getType(properties[key], camelizeKeys)
+      const isNullable = properties[key]['x-nullable']
 
-      return `${propertyKey}: ${propertyType},`
+      return `${propertyKey}: ${isNullable ? '?' : ''}${propertyType},`
     })
     .join('\n')
 }

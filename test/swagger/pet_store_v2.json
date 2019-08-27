@@ -602,7 +602,7 @@
         "lastName": { "type": "string" },
         "email": { "type": "string" },
         "password": { "type": "string" },
-        "phone": { "type": "string" },
+        "phone": { "type": "string", "x-nullable": true },
         "userStatus": {
           "type": "integer",
           "format": "int32",
@@ -637,12 +637,14 @@
         "photoUrls": {
           "type": "array",
           "xml": { "name": "photoUrl", "wrapped": true },
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "x-nullable": true
         },
         "tags": {
           "type": "array",
           "xml": { "name": "tag", "wrapped": true },
-          "items": { "$ref": "#/definitions/Tag" }
+          "items": { "$ref": "#/definitions/Tag" },
+          "x-nullable": true
         },
         "status": {
           "type": "string",
