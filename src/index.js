@@ -110,12 +110,19 @@ async function fetchSwaggerFromURL(url) {
 }
 
 module.exports = async function generateFlowTypes(source, opts) {
-  let definition
-  if (source.includes('http')) {
-    definition = await fetchSwaggerFromURL(source)
-  } else {
-    definition = fetchSwaggerFromFile(source)
+  let swagger
+
+  try {
+    if (source.includes('http')) {
+      swagger = await fetchSwaggerFromURL(source)
+    } else {
+      swagger = fetchSwaggerFromFile(source)
+    }
+  } catch (e) {
+    console.log(`Failed to load swagger document from ${source}.`)
+    console.error(e)
+    process.exit(1)
   }
 
-  return readSchema(definition, opts)
+  return readSchema(swagger, opts)
 }
