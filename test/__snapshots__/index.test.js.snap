@@ -276,6 +276,7 @@ export type User = {
   email: string,
   password: string,
   phone: ?string,
+  testField: string | number,
   userStatus: number,
 }
 

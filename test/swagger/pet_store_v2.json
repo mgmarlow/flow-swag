@@ -603,6 +603,7 @@
         "email": { "type": "string" },
         "password": { "type": "string" },
         "phone": { "type": "string", "x-nullable": true },
+        "testField": { "oneOf": [{ "type": "string" }, { "type": "float", "format": "float64" }] },
         "userStatus": {
           "type": "integer",
           "format": "int32",

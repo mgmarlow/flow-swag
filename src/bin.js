@@ -9,8 +9,8 @@ program
   .option('-o, --output <file>', 'output file', 'types.js')
   .option('-p, --prettierConfig <.prettierrc>', 'prettier configuration file')
   .option('-c, --camelizeKeys', 'camelCase property names')
-  .action((source, program) => {
-    const types = generateFlowTypes(source, {
+  .action(async (source, program) => {
+    const types = await generateFlowTypes(source, {
       prettierConfig: program.prettierConfig,
       camelizeKeys: program.camelizeKeys,
     })

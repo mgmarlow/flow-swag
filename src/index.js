@@ -14,8 +14,18 @@ function extractTypeFromRef(schema) {
   return last(schema.split('/'))
 }
 
+function extractOneOf(oneOf) {
+  return oneOf.reduce((acc, cur) => {
+    return `${getType(acc)} | ${getType(cur)}`
+  })
+}
+
 // Converts a given swagger type to Flow
 function getType(property, camelizeKeys) {
+  if (property.oneOf) {
+    return extractOneOf(property.oneOf)
+  }
+
   const type = property.type
     ? property.type
     : extractTypeFromRef(property['$ref'])

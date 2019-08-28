@@ -6,10 +6,10 @@ describe('#generateFlowTypes', () => {
       prettierConfig: './test/swagger/.prettierrc',
     }
 
-    it('should generate flow types', () => {
+    it('should generate flow types', async () => {
       const source = './test/swagger/pet_store.yaml'
 
-      const types = generateFlowTypes(source, options)
+      const types = await generateFlowTypes(source, options)
       expect(types).toMatchSnapshot()
     })
   })
@@ -20,10 +20,10 @@ describe('#generateFlowTypes', () => {
         camelizeKeys: true,
       }
 
-      it('should generate flow types', () => {
+      it('should generate flow types', async () => {
         const source = './test/swagger/pet_store.yaml'
 
-        const types = generateFlowTypes(source, options)
+        const types = await generateFlowTypes(source, options)
         expect(types).toMatchSnapshot()
       })
     })
@@ -33,10 +33,10 @@ describe('#generateFlowTypes', () => {
         camelizeKeys: false,
       }
 
-      it('should generate flow types', () => {
+      it('should generate flow types', async () => {
         const source = './test/swagger/pet_store.yaml'
 
-        const types = generateFlowTypes(source, options)
+        const types = await generateFlowTypes(source, options)
         expect(types).toMatchSnapshot()
       })
     })
@@ -48,10 +48,10 @@ describe('#generateFlowTypes', () => {
         camelizeKeys: true,
       }
 
-      it('should generate flow types', () => {
+      it('should generate flow types', async () => {
         const source = './test/swagger/pet_store.json'
 
-        const types = generateFlowTypes(source, options)
+        const types = await generateFlowTypes(source, options)
         expect(types).toMatchSnapshot()
       })
     })
@@ -61,20 +61,20 @@ describe('#generateFlowTypes', () => {
         camelizeKeys: false,
       }
 
-      it('should generate flow types', () => {
+      it('should generate flow types', async () => {
         const source = './test/swagger/pet_store.json'
 
-        const types = generateFlowTypes(source, options)
+        const types = await generateFlowTypes(source, options)
         expect(types).toMatchSnapshot()
       })
     })
   })
 
   describe('swagger v2', () => {
-    it('should generate flow types', () => {
+    it('should generate flow types', async () => {
       const source = './test/swagger/pet_store_v2.json'
 
-      const types = generateFlowTypes(source, {})
+      const types = await generateFlowTypes(source, {})
       expect(types).toMatchSnapshot()
     })
   })
