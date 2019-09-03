@@ -7,6 +7,9 @@ const keys = require('lodash/keys')
 const merge = require('lodash/merge')
 const last = require('lodash/last')
 const camelCase = require('lodash/camelCase')
+const upperFirst = require('lodash/upperFirst')
+
+const pascalCase = str => upperFirst(camelCase(str))
 
 // Grabs the end of a ref and assumes it to be a defined type
 // e.g. '#/components/schemas/User' -> User
@@ -31,8 +34,8 @@ function getType(property, camelizeKeys) {
     : extractTypeFromRef(property['$ref'])
 
   switch (type) {
+    case 'number':
     case 'integer':
-    case 'float':
       return 'number'
 
     case 'boolean':
@@ -86,9 +89,10 @@ function readSchema(base, { prettierConfig, camelizeKeys }) {
   }
 
   const types = keys(schemas).map(key => {
+    const typeName = pascalCase(key)
     const properties = generateProperties(schemas[key].properties, camelizeKeys)
 
-    return `export type ${key} = {
+    return `export type ${typeName} = {
         ${properties}
       }`
   })
